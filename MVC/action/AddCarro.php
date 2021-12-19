@@ -5,20 +5,21 @@ ini_set('display_errors', 1);
 session_start();
 header("Content-Type: text/html; charset=UTF-8", true);
 
-require_once ('../model/Pessoa.php');
-require_once ('../dao/PessoaDAO.php');
+require_once ('../model/Carros.php');
+require_once ('../dao/CarrosDAO.php');
 
 $dao = null;
 
 try {
-    $obj = new Pessoa();
-    $obj->nome = $_POST["nome"];
-    $obj->email = $_POST["email"];
-    $obj->datanascimento = $_POST["datanascimento"];
-    $obj->telefone = $_POST["telefone"];
+    $obj = new Carros();
+    $obj->marca = $_POST["marca"];
+    $obj->carro = $_POST["carro"];
+    $obj->fab = $_POST["fab"];
+    $obj->quilometros = $_POST["quilometros"];
+    $obj->preco = $_POST["preco"];
 
     if ($obj->validarCampos()){
-        $dao = new PessoaDAO();
+        $dao = new CarrosDAO();
         $codigo = $dao->insert($obj);
         if(!empty($codigo)) {
             echo $codigo;

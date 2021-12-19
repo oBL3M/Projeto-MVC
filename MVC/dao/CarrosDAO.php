@@ -3,14 +3,14 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require_once('Conexao.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/projeto-4/MVC/model/Pessoa.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/concessionaria-jooj/MVC/model/Carros.php');
 
-class PessoaDAO
+class CarrosDAO
 {
 
     private $sql;
-    private $tabela = 'pessoas';
-    private $campos = ['nome', 'email', 'datanascimento', 'telefone'];
+    private $tabela = 'carros';
+    private $campos = ['marca', 'carro', 'fab', 'quilometros', 'preco'];
     public $colunas;
     public $values;
     public $parameters = [];
@@ -30,7 +30,7 @@ class PessoaDAO
         $this->colunas_update = substr($this->colunas_update, 0, -2);
     }
 
-    public function insert(Pessoa $obj)
+    public function insert(Carros $obj)
     {
 
         foreach ($this->campos as $campo) {
@@ -48,7 +48,7 @@ class PessoaDAO
 
     }
 
-    public function update(Pessoa $obj)
+    public function update(Carros $obj)
     {
 
         foreach ($this->campos as $campo) {
@@ -89,7 +89,7 @@ class PessoaDAO
             $operacao->execute([':id' => $id]);
 
             if ($row = $operacao->fetch(PDO::FETCH_ASSOC)) {
-                $obj = new Pessoa();
+                $obj = new Carros();
                 $obj->id = $id;
                 foreach ($this->campos as $campo) {
                     $obj->$campo = $row[$campo];
