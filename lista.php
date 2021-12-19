@@ -1,78 +1,67 @@
 <?php
-    require_once ('mvc/DAO/CarrosDAO.php');
-  
-    $CarrosDAO = new CarrosDAO();
-    $lista = $CarrosDAO->getLista(0, 999);
+    require_once ('MVC/dao/PessoaDAO.php');
+
+    $pessoaDao = new PessoaDAO();
+    $lista = $pessoaDao->getLista(0, 999);
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto MVC</title>
 
-  <link rel="stylesheet" href="css/table.css">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
-
-  <title>CONCESSIONÁRIA JOOJ</title>
+    <link rel="stylesheet" href="src/exemplo.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 </head>
+
 <body>
-  <header>
-    <div class="logo">
-      <h2>concessionária</h2>
-      <h1>JOOJ</h2>
+    <div class="wrapper-table">
+        <h1>Projeto MVC</h1>
+        <div class="menu">
+            <a href="index.php">Cadastro de pessoas!</a>
+            <a href="lista.php" class="destaque">Lista de pessoas cadastradas!</a>
+        </div>
+
+        <h2>Registros cadastrados</h2>
+        <!-- TODO: montar a lista -->
+        <table>
+            <tr>
+                <th>Cód.</th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Data Nasc.</th>
+                <th>Telefone</th>
+                <th>Ações</th>
+            </tr>
+            <?php while ($linha = $lista->fetch(PDO::FETCH_ASSOC)) { ?>
+                <tr>
+                    <td><?php echo $linha['id'] ?></td>
+                    <td><?php echo $linha['nome'] ?></td>
+                    <td><?php echo $linha['email'] ?></td>
+                    <td><?php echo $linha['datanascimento'] ?></td>
+                    <td><?php echo $linha['telefone'] ?></td>
+                    <td class="actions">
+                        <button class="update">
+                                <a href="/projeto/index.php?id=<?php echo $linha['id'] ?>">
+                                Editar
+                                </a>
+                        </button>
+
+                        <button data-id="<?php echo $linha['id'] ?>" class="delete" >
+                                Excluir
+                        </button>
+
+                    </td>
+                </tr>
+                <?php } ?>
+        </table>
     </div>
-    <div class="logout">
-      <a href="index.html">SAIR</a>
-    </div>
-  </header>
-  <div class="sub-nav">
-  <div class="sub-nav-off">LISTA DE VEICULOS</div>
-  <a href="formulario.php"><div class="sub-nav-on">ADICIONAR/EDITAR VEICULO</div></a>
-  </div>
-  <main>
-    <div class="div-table">
-    <div>
-      <input type="text" id="sid" onkeyup="idsearch()" placeholder="Procure por ID">
-      <input type="text" id="smarca" onkeyup="marcasearch()" placeholder="Procure por CARRO">
-      <input type="text" id="scarro" onkeyup="carrosearch()" placeholder="Procure por MARCA">
-    </div>
-      <table id="lista">
-        <tr class="listaheader">
-          <th style="width:5%;">ID</th>
-          <th style="width:20%;">MARCA</th>
-          <th style="width:20%;">CARRO</th>
-          <th style="width:15%;">FAB/MOD</th>
-          <th style="width:20%;">QUILOMETROS</th>
-          <th style="width:15%;">PREÇO</th>
-          <th style="width:5%;">AÇÕES</th>
-        </tr>
-        <?php while ($linha = $lista->fetch(PDO::FETCH_ASSOC)) {
-        ?>
-       <tr>
-          <td><?php echo $linha['id'] ?></td>
-          <td><?php echo $linha['marca'] ?></td>
-          <td><?php echo $linha['carro'] ?></td>
-          <td><?php echo $linha['fab'] ?></td>
-          <td><?php echo $linha['quilometros'] ?></td>
-          <td><?php echo $linha['preco'] ?></td>
-          <td class="actions"> 
-          <a id=updbtn class="update" href="formulario.php?id=<?php echo $linha['id'] ?>"><div>EDIT</div></a>
-          <button data-id="<?php echo $linha['id'] ?>" class="delete">DEL</button>
-        </td>
-        </tr>
-            <?php } ?>
-      </table>
-    </div>
-  </main>
-  <footer class="footer">
-    <a href="#">GITHUB</a>
-    <a href="#">CODEPEN</a>
-  </footer>
 </body>
-<script src="js/carros.js"></script>
+
+<script src="src/exemplo.js"></script>
+
 </html>
